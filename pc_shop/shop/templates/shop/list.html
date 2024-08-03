@@ -12,6 +12,7 @@
         <div>
             <a href="{% url 'shop:product_detail' product.id product.slug %}">{{ product.name }}</a>
             <p>{{ product.price }}</p>
+            <p>{{ product.image }}</p>
         </div>
     {% endfor %}
 </div>
