@@ -2,9 +2,10 @@ from django.db import models
 
 # Create your models here.
 from django.contrib.auth.models import (
-    AbstractBaseUser,
     BaseUserManager,
-    PermissionsMixin,
+    AbstractUser,
+    Group,
+    Permission,
 )
 from django.db import models
 from django.utils import timezone
@@ -35,12 +36,14 @@ class AccountManager(BaseUserManager):
         return user
 
 
-class Account(AbstractBaseUser, PermissionsMixin):
+class Account(AbstractUser):
     email = models.EmailField(_("email address"), unique=True)
     created_at = models.DateTimeField(default=timezone.now)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     objects = AccountManager()
+    groups = models.ManyToManyField(Group, related_name="account_groups")
+    user_permissions = models.ManyToManyField(Permission, related_name="account_user_permissions")
 
     USERNAME_FIELD = "email"
 
