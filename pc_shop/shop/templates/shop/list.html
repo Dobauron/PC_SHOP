@@ -1,3 +1,4 @@
+<!-- shop/templates/shop/product/list.html -->
 {% extends "base.html" %}
 
 {% block content %}
@@ -7,12 +8,20 @@
         <a href="{% url 'shop:product_list_by_category' category.slug %}">{{ category.name }}</a>
     {% endfor %}
 </div>
-<div>
+<div class="row">
     {% for product in products %}
-        <div>
-            <a href="{% url 'shop:product_detail' product.id product.slug %}">{{ product.name }}</a>
-            <p>{{ product.price }}</p>
-            <p>{{ product.image }}</p>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                {% if product.image %}
+                    <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                    <img class="card-img-top" src="https://via.placeholder.com/150" alt="{{ product.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{% url 'shop:product_detail' product.id product.slug %}">{{ product.name }}</a></h5>
+                    <p class="card-text">{{ product.price }}</p>
+                </div>
+            </div>
         </div>
     {% endfor %}
 </div>
