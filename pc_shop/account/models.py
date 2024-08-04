@@ -46,6 +46,7 @@ class Account(AbstractUser):
     user_permissions = models.ManyToManyField(Permission, related_name="account_user_permissions")
 
     USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
 
     def __str__(self):
         return self.email
