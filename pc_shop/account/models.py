@@ -32,12 +32,11 @@ class AccountManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, **other_fields)
         user.set_password(password)
-        user.save()
+        user.save(using=self._db)
         return user
 
 
 class Account(AbstractUser):
-    username = None
     email = models.EmailField(_("email address"), unique=True)
     created_at = models.DateTimeField(default=timezone.now)
     is_staff = models.BooleanField(default=False)
