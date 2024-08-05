@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load cart_extras %}
 {% block content %}
 <div class="container mt-5">
     <h2>Your Cart</h2>
@@ -11,6 +11,7 @@
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Total</th>
+                    <th>Actions</th> <!-- Dodano kolumnę akcji -->
                 </tr>
             </thead>
             <tbody>
@@ -20,12 +21,18 @@
                         <td>{{ item.quantity }}</td>
                         <td>{{ item.product.price }}</td>
                         <td>{{ item.quantity|multiply:item.product.price }}</td>
+                        <td>
+                            <form method="post" action="{% url 'cart:remove_from_cart' item.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                            </form>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
         <div class="text-right">
-            <strong>Total: {{ cart.items.all|cart_total }}</strong>
+            <strong>Total: {{ cart|cart_total }}</strong>
         </div>
     {% else %}
         <p>Your cart is empty.</p>
