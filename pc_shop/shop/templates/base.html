@@ -30,7 +30,10 @@
         .cart-icon {
             width: 24px;
             height: auto;
-            background-color: #343a40;
+        }
+        /* Ensure the navbar links are aligned to the right */
+        .navbar-nav.ml-auto {
+            margin-left: auto;
         }
     </style>
 </head>
@@ -42,6 +45,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
+            <!-- Left side of the navbar can be empty or include additional items -->
+        </ul>
+        <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'accounts:dashboard' %}">Dashboard</a>
@@ -57,7 +63,6 @@
                         <img src="{% static 'images/cart.png' %}" alt="Cart" class="cart-icon">
                     </a>
                 </li>
-
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
