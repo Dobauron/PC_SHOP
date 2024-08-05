@@ -28,8 +28,8 @@ Pc Shop is an e-commerce platform built with Django, allowing users to browse pr
 3. Apply Migrations
   python manage.py migrate
 
-4.Create superuser
+4. Create superuser
   python manage.py createsuperuser
 
-5.Run the Development Server
+5. Run the Development Server
   pytohn manage.py runserver
