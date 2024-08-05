@@ -44,7 +44,7 @@ class Account(AbstractUser):
     objects = AccountManager()
     groups = models.ManyToManyField(Group, related_name="account_groups")
     user_permissions = models.ManyToManyField(Permission, related_name="account_user_permissions")
-
+    username = None
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 

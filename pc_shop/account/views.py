@@ -3,6 +3,8 @@ from django.views.generic.edit import FormView
 from django.contrib.auth.views import LoginView, LogoutView
 from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth import authenticate, login
+from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 import logging
 
@@ -23,12 +25,11 @@ class UserLoginView(LoginView):
     template_name = 'accounts/login.html'
     authentication_form = UserLoginForm
     redirect_authenticated_user = True
+    success_url = 'shop:shop'
 
     def form_valid(self, form):
         email = form.cleaned_data.get('username')
-        print(email)
         password = form.cleaned_data.get('password')
-        print(password)
         logger.debug(f'Trying to authenticate user with email: {email}')
         user = authenticate(self.request, email=email, password=password)
         if user is not None:
@@ -43,3 +44,9 @@ class UserLoginView(LoginView):
 class UserLogoutView(LogoutView):
     template_name = 'accounts/logout.html'
     next_page = reverse_lazy('accounts:login')
+
+
+
+class UserDashboardView(LoginRequiredMixin, TemplateView):
+    template_name = 'accounts/dashboard.html'
+    login_url = 'accounts:login'
