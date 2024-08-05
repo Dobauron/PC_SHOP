@@ -131,3 +131,7 @@ LOGOUT_REDIRECT_URL = 'accounts:login'
 
 AUTH_USER_MODEL = 'account.Account'
 
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
