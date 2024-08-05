@@ -6,7 +6,6 @@ from .models import Cart, CartItem
 from shop.models import Product
 from .forms import AddToCartForm
 
-
 class AddToCartView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         form = AddToCartForm(request.POST or None)
@@ -29,7 +28,6 @@ class AddToCartView(LoginRequiredMixin, View):
 
             return redirect('cart:cart_detail')  # Redirect to cart detail view
         return redirect('shop:product_list')
-
 
 class CartDetailView(LoginRequiredMixin, ListView):
     model = CartItem
