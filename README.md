@@ -10,12 +10,6 @@ Pc Shop is an e-commerce platform built with Django, allowing users to browse pr
 - **User Authentication**: Register, log in, and manage user accounts.
 - **Dashboard**: Access user-specific information and actions.
 
-## Requirements
-
-- Python 3.x
-- Django 4.x
-- Pillow (for image handling)
-
 ## Installation & usage
 
 1. **Clone the Repository**
@@ -32,4 +26,4 @@ Pc Shop is an e-commerce platform built with Django, allowing users to browse pr
   python manage.py createsuperuser
 
 5. Run the Development Server
-  pytohn manage.py runserver
+  python manage.py runserver
