@@ -5,7 +5,7 @@ from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth import authenticate, login
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from orders.models import Order
 import logging
 
 logger = logging.getLogger(__name__)
@@ -49,3 +49,8 @@ class UserLogoutView(LogoutView):
 class UserDashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'accounts/dashboard.html'
     login_url = 'accounts:login'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['orders'] = Order.objects.filter(user=self.request.user)
+        return context

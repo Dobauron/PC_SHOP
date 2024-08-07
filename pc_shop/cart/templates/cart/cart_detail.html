@@ -33,6 +33,7 @@
         </table>
         <div class="text-right">
             <strong>Total: {{ cart|cart_total }}</strong>
+             <a href="{% url 'orders:order_create' %}" class="btn btn-success">Checkout</a>
         </div>
     {% else %}
         <p>Your cart is empty.</p>
