@@ -15,7 +15,22 @@
             {{ form.as_p }}
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
+
+        <div class="mt-3">
+            <p>or login with:</p>
+            <a href="{% url 'account_login' provider='google' %}" class="btn btn-outline-danger">
+                <i class="fab fa-google"></i> Google
+            </a>
+            <a href="{% url 'account_login' provider='facebook' %}" class="btn btn-outline-primary">
+                <i class="fab fa-facebook-f"></i> Facebook
+            </a>
+        </div>
+
+        <p class="mt-3">
+            Don't have an account? <a href="{% url 'account_signup' %}">Sign up here</a>.
+        </p>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
