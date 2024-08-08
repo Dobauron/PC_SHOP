@@ -38,15 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'user_account',
+    'shop',
+    'cart',
+    'orders',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
-    'account',
-    'shop',
-    'cart',
-    'orders',
+
 ]
 
 SITE_ID = 1
@@ -59,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'pc_shop.urls'
@@ -116,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
+    'allauth.user_account.auth_backends.AuthenticationBackend',
 ]
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -150,7 +152,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
-AUTH_USER_MODEL = 'account.Account'
+AUTH_USER_MODEL = 'user_account.Account'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
