@@ -54,3 +54,4 @@ class UserDashboardView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['orders'] = Order.objects.filter(user=self.request.user)
         return context
+
