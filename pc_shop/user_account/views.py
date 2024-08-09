@@ -34,7 +34,7 @@ class UserLoginView(LoginView):
         user = authenticate(self.request, email=email, password=password)
         if user is not None:
             login(self.request, user)
-            logger.debug(f'Successfully authenticated usear with email: {email}')
+            logger.debug(f'Successfully authenticated user with email: {email}')
             return super().form_valid(form)
         else:
             logger.debug(f'Failed to authenticate user with email: {email}')
