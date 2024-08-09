@@ -37,6 +37,7 @@ class AccountManager(BaseUserManager):
 
 
 class Account(AbstractUser):
+    username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(_("email address"), unique=True)
     created_at = models.DateTimeField(default=timezone.now)
     is_staff = models.BooleanField(default=False)
@@ -44,9 +45,8 @@ class Account(AbstractUser):
     objects = AccountManager()
     groups = models.ManyToManyField(Group, related_name="account_groups")
     user_permissions = models.ManyToManyField(Permission, related_name="account_user_permissions")
-    username = None
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return self.email
+        return self.username
