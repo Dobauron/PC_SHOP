@@ -18,6 +18,7 @@ class UserRegisterView(FormView):
 
     def form_valid(self, form):
         form.save()
+        print(f"Redirecting to: {self.get_success_url()}")
         return super().form_valid(form)
 
 
@@ -25,7 +26,7 @@ class UserLoginView(LoginView):
     template_name = 'accounts/login.html'
     authentication_form = UserLoginForm
     redirect_authenticated_user = True
-    success_url = 'shop:shop'
+    success_url = reverse_lazy('accounts:dashboard')
 
     def form_valid(self, form):
         email = form.cleaned_data.get('username')
