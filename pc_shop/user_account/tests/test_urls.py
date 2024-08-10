@@ -33,10 +33,11 @@ class AccountViewsTest(TestCase):
     def test_register_view_post(self):
         response = self.client.post(self.register_url, {
             'email': 'newuser@example.com',
-            'password1': 'newpassword',
-            'password2': 'newpassword',
+            'password1': 'Newpassword12#',
+            'password2': 'Newpassword12#',
         })
-
+        print(response.status_code)  # Should be 302
+        print(response.context)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, self.login_url)
         self.assertTrue(User.objects.filter(email='newuser@example.com').exists())
@@ -59,7 +60,6 @@ class AccountViewsTest(TestCase):
     def test_logout_view(self):
         self.client.login(email='testuser@example.com', password='password123')
         response = self.client.post(self.logout_url)
-        print(response.status_code)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, self.login_url)
         self.assertNotIn('_auth_user_id', self.client.session)
