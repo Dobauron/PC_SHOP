@@ -18,7 +18,6 @@ class UserRegisterView(FormView):
 
     def form_valid(self, form):
         form.save()
-        print(f"Redirecting to: {self.get_success_url()}")
         return super().form_valid(form)
 
 
