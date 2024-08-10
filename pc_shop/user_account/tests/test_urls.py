@@ -1,9 +1,6 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from django.contrib.auth import login as auth_login
-from django.contrib.auth import logout as auth_logout
-from django.contrib.auth.models import Group, Permission
 from ..forms import UserRegistrationForm, UserLoginForm
 
 User = get_user_model()
@@ -36,8 +33,6 @@ class AccountViewsTest(TestCase):
             'password1': 'Newpassword12#',
             'password2': 'Newpassword12#',
         })
-        print(response.status_code)  # Should be 302
-        print(response.context)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, self.login_url)
         self.assertTrue(User.objects.filter(email='newuser@example.com').exists())
