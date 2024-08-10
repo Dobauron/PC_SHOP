@@ -40,6 +40,10 @@ class UserLoginView(LoginView):
             logger.debug(f'Failed to authenticate user with email: {email}')
             return self.form_invalid(form)
 
+    def form_invalid(self, form):
+
+        return self.render_to_response(self.get_context_data(form=form))
+
 
 class UserLogoutView(LogoutView):
     template_name = 'accounts/logout.html'
@@ -54,4 +58,3 @@ class UserDashboardView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['orders'] = Order.objects.filter(user=self.request.user)
         return context
-

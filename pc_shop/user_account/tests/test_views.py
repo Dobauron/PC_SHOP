@@ -1,15 +1,15 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from django.contrib.auth import get_user_model
-from orders.models import Order
+from orders.models import Order, OrderItem
 from ..forms import UserRegistrationForm, UserLoginForm
+from ..models import Account
+from shop.models import Product, Category
 
 
 class UserViewsTests(TestCase):
     def setUp(self):
         self.client = Client()
-        self.User = get_user_model()
-        self.user = self.User.objects.create_user(
+        self.user = Account.objects.create_user(
             email='testuser@example.com',
             password='testpassword',
             username='testuser'
@@ -34,7 +34,7 @@ class UserViewsTests(TestCase):
         })
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, self.login_url)
-        user = self.User.objects.get(email='newuser@example.com')
+        user = Account.objects.get(email='newuser@example.com')
         self.assertTrue(user.check_password('Newpassword12#'))
 
     def test_login_view_get(self):
@@ -49,7 +49,7 @@ class UserViewsTests(TestCase):
             'password': 'testpassword'
         })
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('shop:shop'))
+        self.assertRedirects(response, reverse('accounts:dashboard'))
         self.assertTrue(self.client.session['_auth_user_id'])
 
     def test_login_view_post_invalid(self):
@@ -58,7 +58,10 @@ class UserViewsTests(TestCase):
             'password': 'wrongpassword'
         })
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Invalid username or password.')
+        self.assertContains(response,
+                            'Please enter a correct email address and password.'
+                            ' Note that both fields may be case-sensitive.')
+
     def test_logout_view(self):
         self.client.login(email='testuser@example.com', password='password123')
         response = self.client.post(self.logout_url)
@@ -68,11 +71,17 @@ class UserViewsTests(TestCase):
 
     def test_dashboard_view(self):
         self.client.login(email='testuser@example.com', password='testpassword')
-        Order.objects.create(user=self.user, product_name='Test Product', quantity=1)
+        category = Category.objects.create(name='test category')
+        product = Product.objects.create(category=category,name='Test Product', price=100)
+        order = Order.objects.create(user=self.user)
+        OrderItem.objects.create(order=order, product=product, price=product.price, quantity=1)
         response = self.client.get(self.dashboard_url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'accounts/dashboard.html')
         self.assertIn('orders', response.context)
         self.assertEqual(response.context['orders'].count(), 1)
 
-
+    def test_dashboard_view_unauthenticated(self):
+        response = self.client.get(self.dashboard_url)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, f"{self.login_url}?next={self.dashboard_url}")
