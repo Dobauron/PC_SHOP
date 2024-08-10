@@ -25,7 +25,7 @@ class UserLoginView(LoginView):
     template_name = 'accounts/login.html'
     authentication_form = UserLoginForm
     redirect_authenticated_user = True
-    success_url = 'shop:shop'
+    success_url = reverse_lazy('accounts:dashboard')
 
     def form_valid(self, form):
         email = form.cleaned_data.get('username')
@@ -39,6 +39,10 @@ class UserLoginView(LoginView):
         else:
             logger.debug(f'Failed to authenticate user with email: {email}')
             return self.form_invalid(form)
+
+    def form_invalid(self, form):
+
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 class UserLogoutView(LogoutView):
@@ -54,4 +58,3 @@ class UserDashboardView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['orders'] = Order.objects.filter(user=self.request.user)
         return context
-

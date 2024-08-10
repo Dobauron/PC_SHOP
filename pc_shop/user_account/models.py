@@ -37,7 +37,7 @@ class AccountManager(BaseUserManager):
 
 
 class Account(AbstractUser):
-    username = models.CharField(max_length=150, unique=True)
+    username = models.CharField(max_length=150)
     email = models.EmailField(_("email address"), unique=True)
     created_at = models.DateTimeField(default=timezone.now)
     is_staff = models.BooleanField(default=False)
@@ -49,4 +49,4 @@ class Account(AbstractUser):
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return self.username
+        return self.email
