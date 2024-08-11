@@ -51,8 +51,8 @@ jobs:
           DB_HOST: 127.0.0.1
           DB_PORT: 3306
           DB_NAME: pc_shop
-          DB_USER: test_user
-          DB_PASSWORD: test_password
+          DB_USER: testuser
+          DB_PASSWORD: testpassword
         run: |
           python manage.py test
 
