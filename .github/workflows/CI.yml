@@ -10,10 +10,10 @@ jobs:
       mysql:
         image: mysql:8.0.37
         env:
-          MYSQL_ROOT_PASSWORD: 'root'  # Ustawia hasło dla użytkownika root
-          MYSQL_DATABASE: 'pc_shop'  # Tworzy bazę danych
-          MYSQL_USER: 'testuser'  # Tworzy dodatkowego użytkownika
-          MYSQL_PASSWORD: 'testpassword'  # Hasło dla dodatkowego użytkownika
+          MYSQL_ROOT_PASSWORD: root  # Ustawia hasło dla użytkownika root
+          MYSQL_DATABASE: pc_shop  # Tworzy bazę danych
+          MYSQL_USER: testuser  # Tworzy dodatkowego użytkownika
+          MYSQL_PASSWORD: testpassword  # Hasło dla dodatkowego użytkownika
         ports:
           - 3306:3306
         options: >-
@@ -21,16 +21,10 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 3
-        volumes:
-          - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Create MySQL user with permissions
-        run: |
-          echo "GRANT ALL PRIVILEGES ON *.* TO 'testuser'@'%' IDENTIFIED BY 'testpassword' WITH GRANT OPTION;" > init.sql
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -61,3 +55,4 @@ jobs:
           DB_PASSWORD: testpassword
         run: |
           python manage.py test
+
