@@ -21,10 +21,16 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 3
+        volumes:
+          - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Create MySQL user with permissions
+        run: |
+          echo "GRANT ALL PRIVILEGES ON *.* TO 'testuser'@'%' IDENTIFIED BY 'testpassword' WITH GRANT OPTION;" > init.sql
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -55,4 +61,3 @@ jobs:
           DB_PASSWORD: testpassword
         run: |
           python manage.py test
-
