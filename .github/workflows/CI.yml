@@ -1,12 +1,6 @@
 name: Django CI
 
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+on: [push, pull_request]
 
 jobs:
   test:
@@ -16,10 +10,10 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: pc_shop
-          MYSQL_USER: root
-          MYSQL_PASSWORD: root
+          MYSQL_ROOT_PASSWORD: rootpassword  # Ustawia hasło dla użytkownika root
+          MYSQL_DATABASE: testdb  # Tworzy bazę danych
+          MYSQL_USER: testuser  # Tworzy dodatkowego użytkownika
+          MYSQL_PASSWORD: testpassword  # Hasło dla dodatkowego użytkownika
         ports:
           - 3306:3306
         options: >-
@@ -35,7 +29,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.9'
 
       - name: Install dependencies
         run: |
@@ -49,7 +43,6 @@ jobs:
       - name: Run tests
         run: |
           python manage.py test
-
         env:
-          DJANGO_SETTINGS_MODULE: pc_shop.settings
-          DATABASE_URL: mysql://root:root@127.0.0.1:3306/pc_shop
+          DJANGO_SETTINGS_MODULE: myproject.settings
+          DATABASE_URL: mysql://testuser:testpassword@localhost:3306/testdb
