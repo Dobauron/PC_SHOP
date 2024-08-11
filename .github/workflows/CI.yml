@@ -47,6 +47,12 @@ jobs:
           python manage.py migrate
 
       - name: Run tests
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_NAME: pc_shop
+          DB_USER: test_user
+          DB_PASSWORD: test_password
         run: |
           python manage.py test
 
