@@ -10,10 +10,10 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ROOT_PASSWORD: rootpassword  # Ustawia hasło dla użytkownika root
-          MYSQL_DATABASE: testdb  # Tworzy bazę danych
-          MYSQL_USER: testuser  # Tworzy dodatkowego użytkownika
-          MYSQL_PASSWORD: testpassword  # Hasło dla dodatkowego użytkownika
+          MYSQL_ROOT_PASSWORD: 'root'  # Ustawia hasło dla użytkownika root
+          MYSQL_DATABASE: 'pc_shop'  # Tworzy bazę danych
+          MYSQL_USER: 'testuser'  # Tworzy dodatkowego użytkownika
+          MYSQL_PASSWORD: 'testpassword'  # Hasło dla dodatkowego użytkownika
         ports:
           - 3306:3306
         options: >-
