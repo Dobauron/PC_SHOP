@@ -12,6 +12,22 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: pc_shop
+          MYSQL_USER: root
+          MYSQL_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd "mysqladmin ping --silent"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 3
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -33,3 +49,7 @@ jobs:
       - name: Run tests
         run: |
           python manage.py test
+
+        env:
+          DJANGO_SETTINGS_MODULE: pc_shop.settings
+          DATABASE_URL: mysql://root:root@127.0.0.1:3306/pc_shop
