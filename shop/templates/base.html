@@ -7,6 +7,8 @@
     <title>{% block title %}My Shop{% endblock %}</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@14.6.3/distribute/nouislider.min.css">
     <style>
         body {
             padding-top: 60px;
@@ -77,5 +79,46 @@
 <div class="container">
     {% block content %}{% endblock %}
 </div>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- noUiSlider JS -->
+<script src="https://cdn.jsdelivr.net/npm/nouislider@14.6.3/distribute/nouislider.min.js"></script>
+
+<!-- Custom script for AJAX filtering -->
+<script>
+    $(document).ready(function(){
+        $('#filter-form').on('submit', function(e){
+            e.preventDefault();
+            $.ajax({
+                url: "{% url 'shop:product_list' %}",
+                type: "GET",
+                data: $(this).serialize(),
+                success: function(data){
+                    $('.product-list').html($(data).find('.product-list').html());
+                }
+            });
+        });
+    });
+
+    var slider = document.getElementById('price-slider');
+    noUiSlider.create(slider, {
+        start: [0, 1000], // Example range
+        connect: true,
+        range: {
+            'min': 0,
+            'max': 1000
+        }
+    });
+
+    slider.noUiSlider.on('update', function(values, handle){
+        document.getElementById('price_min').value = values[0];
+        document.getElementById('price_max').value = values[1];
+    });
+</script>
+
 </body>
 </html>
