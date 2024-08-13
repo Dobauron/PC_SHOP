@@ -3,7 +3,7 @@ from django.views.generic import DetailView
 from .models import Category, Product
 from django_filters.views import FilterView
 from .filters import ProductFilter
-
+from django.db.models import Max
 
 
 class ProductListView(FilterView):
@@ -18,7 +18,7 @@ class ProductListView(FilterView):
         category_slug = self.kwargs.get("category_slug")
         if category_slug:
             category = get_object_or_404(Category, slug=category_slug)
-            queryset = queryset.filter(category=category)
+            queryset = queryset.filter(category=category, available=True)
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -29,6 +29,8 @@ class ProductListView(FilterView):
             if self.kwargs.get("category_slug")
             else None
         )
+        max_price = Product.objects.aggregate(max_price=Max('price'))['max_price']
+        context['max_price'] = max_price
         return context
 
 class ProductDetailView(DetailView):

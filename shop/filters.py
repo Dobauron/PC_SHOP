@@ -1,5 +1,6 @@
 import django_filters
 from .models import Product, Category
+from .forms import ProductFilterForm
 
 class ProductFilter(django_filters.FilterSet):
     price = django_filters.RangeFilter()
@@ -12,4 +13,6 @@ class ProductFilter(django_filters.FilterSet):
         fields = ['category', 'price', 'brand', 'rating']
 
     def filter_by_rating(self, queryset, name, value):
-        return queryset.filter(rating__gte=value)
+        if value:
+            return queryset.filter(rating__gte=value)
+        return queryset

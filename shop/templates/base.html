@@ -88,6 +88,7 @@
 <!-- noUiSlider JS -->
 <script src="https://cdn.jsdelivr.net/npm/nouislider@14.6.3/distribute/nouislider.min.js"></script>
 
+<script src="{% static 'js/filters.js' %}"></script>
 <!-- Custom script for AJAX filtering -->
 <script>
     $(document).ready(function(){
@@ -106,11 +107,11 @@
 
     var slider = document.getElementById('price-slider');
     noUiSlider.create(slider, {
-        start: [0, 1000], // Example range
+        start: [0, {{ max_price|default:"1000" }}], // Example range
         connect: true,
         range: {
             'min': 0,
-            'max': 1000
+            'max': {{ max_price|default:"1000" }}
         }
     });
 
