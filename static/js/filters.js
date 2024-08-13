@@ -1,6 +1,11 @@
+console.log("filters.js loaded successfully");
+
 $(document).ready(function() {
     var slider = document.getElementById('price-slider');
-    var maxPrice = {{ max_price|default:"1000" }};
+    if (!slider) {
+        console.error("Slider element not found");
+        return;
+    }
 
     noUiSlider.create(slider, {
         start: [0, maxPrice],
@@ -19,7 +24,7 @@ $(document).ready(function() {
     $('#filter-form').on('submit', function(e) {
         e.preventDefault();
         $.ajax({
-            url: "{% url 'shop:product_list' %}",
+            url: productListUrl,  // Używamy poprawnie zdefiniowanej zmiennej
             type: "GET",
             data: $(this).serialize(),
             success: function(data) {

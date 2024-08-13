@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{% load custom_filters %}
+{% load bootstrap5 %}
 {% load static %}
 <html lang="en">
 <head>
@@ -88,38 +90,46 @@
 <!-- noUiSlider JS -->
 <script src="https://cdn.jsdelivr.net/npm/nouislider@14.6.3/distribute/nouislider.min.js"></script>
 
-<script src="{% static 'js/filters.js' %}"></script>
-<!-- Custom script for AJAX filtering -->
 <script>
-    $(document).ready(function(){
-        $('#filter-form').on('submit', function(e){
-            e.preventDefault();
-            $.ajax({
-                url: "{% url 'shop:product_list' %}",
-                type: "GET",
-                data: $(this).serialize(),
-                success: function(data){
-                    $('.product-list').html($(data).find('.product-list').html());
-                }
-            });
-        });
-    });
-
+    $(document).ready(function() {
     var slider = document.getElementById('price-slider');
+    if (!slider) {
+        console.error("Slider element not found");
+        return;
+    }
+
     noUiSlider.create(slider, {
-        start: [0, {{ max_price|default:"1000" }}], // Example range
+        start: [0, maxPrice],
         connect: true,
         range: {
             'min': 0,
-            'max': {{ max_price|default:"1000" }}
+            'max': maxPrice
         }
     });
 
-    slider.noUiSlider.on('update', function(values, handle){
+    slider.noUiSlider.on('update', function(values) {
         document.getElementById('price_min').value = values[0];
         document.getElementById('price_max').value = values[1];
     });
-</script>
 
+    $('#filter-form').on('submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: productListUrl,  // Używamy poprawnie zdefiniowanej zmiennej
+            type: "GET",
+            data: $(this).serialize(),
+            success: function(data) {
+                $('.product-list').html($(data).find('.product-list').html());
+            }
+        });
+    });
+});
+
+</script>
+<!--<script>-->
+<!--    var productListUrl = "{% url 'shop:product_list' %}";-->
+<!--    var maxPrice = {{ max_price|default:"1000" }};-->
+<!--</script>-->
+<!--<script src="{% static 'js/filters.js' %}"></script>-->
 </body>
 </html>
