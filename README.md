@@ -16,14 +16,14 @@ Pc Shop is an e-commerce platform built with Django, allowing users to browse pr
  git clone https://github.com/Dobauron/PC_SHOP.git
  cd pc_shop
 
-2. Install Dependencies
+2. **Install Dependencies**
   pip install -r requirements.txt
 
-3. Apply Migrations
+3. **Apply Migrations**
   python manage.py migrate
 
-4. Create superuser
+4. **Create superuser**
   python manage.py createsuperuser
 
-5. Run the Development Server
+5. **Run the Development Server**
   python manage.py runserver
