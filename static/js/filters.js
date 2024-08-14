@@ -1,5 +1,3 @@
-console.log("filters.js loaded successfully");
-
 $(document).ready(function() {
     var slider = document.getElementById('price-slider');
     if (!slider) {
@@ -24,7 +22,7 @@ $(document).ready(function() {
     $('#filter-form').on('submit', function(e) {
         e.preventDefault();
         $.ajax({
-            url: productListUrl,  // Używamy poprawnie zdefiniowanej zmiennej
+            url: productListUrl,
             type: "GET",
             data: $(this).serialize(),
             success: function(data) {

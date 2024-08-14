@@ -29,9 +29,10 @@ class ProductListView(FilterView):
             if self.kwargs.get("category_slug")
             else None
         )
-        max_price = Product.objects.aggregate(max_price=Max('price'))['max_price']
-        context['max_price'] = max_price
+        max_price = Product.objects.aggregate(max_price=Max("price"))["max_price"]
+        context["max_price"] = max_price
         return context
+
 
 class ProductDetailView(DetailView):
     model = Product
