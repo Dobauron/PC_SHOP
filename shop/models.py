@@ -21,6 +21,7 @@ class Product(models.Model):
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    brand = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return self.name

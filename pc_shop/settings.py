@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.facebook",
+    "django_filters",
+    'django_bootstrap5',
 ]
 
 SITE_ID = 1
