@@ -1,3 +1,5 @@
+console.log("filters.js loaded successfully");
+
 $(document).ready(function() {
     var slider = document.getElementById('price-slider');
     if (!slider) {
@@ -14,9 +16,18 @@ $(document).ready(function() {
         }
     });
 
+    var priceMinDisplay = document.getElementById('price-min-display');
+    var priceMaxDisplay = document.getElementById('price-max-display');
+
     slider.noUiSlider.on('update', function(values) {
-        document.getElementById('price_min').value = values[0];
-        document.getElementById('price_max').value = values[1];
+        var minPrice = parseFloat(values[0]).toFixed(2);
+        var maxPrice = parseFloat(values[1]).toFixed(2);
+
+        document.getElementById('price_min').value = minPrice;
+        document.getElementById('price_max').value = maxPrice;
+
+        priceMinDisplay.textContent = minPrice;
+        priceMaxDisplay.textContent = maxPrice;
     });
 
     $('#filter-form').on('submit', function(e) {

@@ -1,0 +1,30 @@
+<aside class="col-md-3 sidebar">
+    <h4>Filters</h4>
+    <form id="filter-form" class="form">
+        <div class="mb-3">
+            <label for="category" class="form-label">Category:</label>
+            <select id="category" name="category" class="form-control">
+                <option value="">All</option>
+                <!-- Options for categories -->
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="price-slider" class="form-label">Price Range:</label>
+            <div id="price-slider" class="mb-3"></div>
+            <div class="price-display">
+                <span>Min: $<span id="price-min-display">0</span></span> -
+                <span>Max: $<span id="price-max-display">{{ max_price|default:"1000" }}</span></span>
+            </div>
+            <input type="hidden" id="price_min" name="price_min" value="0">
+            <input type="hidden" id="price_max" name="price_max" value="{{ max_price|default:"1000" }}">
+        </div>
+        <div class="mb-3">
+            <label for="brand" class="form-label">Brand:</label>
+            <select id="brand" name="brand" class="form-control">
+                <option value="">All</option>
+                <!-- Options for brands -->
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Apply Filters</button>
+    </form>
+</aside>
