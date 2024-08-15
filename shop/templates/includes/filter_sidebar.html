@@ -5,7 +5,9 @@
             <label for="category" class="form-label">Category:</label>
             <select id="category" name="category" class="form-control">
                 <option value="">All</option>
-                <!-- Options for categories -->
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
             </select>
         </div>
         <div class="mb-3">
@@ -22,7 +24,9 @@
             <label for="brand" class="form-label">Brand:</label>
             <select id="brand" name="brand" class="form-control">
                 <option value="">All</option>
-                <!-- Options for brands -->
+                {% for brand in brands %}
+                    <option value="{{ brand }}">{{ brand }}</option>
+                {% endfor %}
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Apply Filters</button>
