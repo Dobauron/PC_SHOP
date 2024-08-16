@@ -31,7 +31,7 @@ class ProductListView(FilterView):
         )
         max_price = Product.objects.aggregate(max_price=Max("price"))["max_price"]
         context["max_price"] = max_price
-        context["brands"] = Product.objects.values_list('brand', flat=True).distinct()
+        context["brands"] = Product.objects.values_list("brand", flat=True).distinct()
         return context
 
 
