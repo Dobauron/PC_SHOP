@@ -4,60 +4,42 @@
 {% block content %}
 <h1>Products</h1>
 
-<div class="row">
-    <div class="col-md-3">
-        <!-- Filters panel -->
-        <h4>Filters</h4>
-        <form id="filter-form" method="get">
-            <div class="form-group">
-                {{ filter.form.category.label_tag }}
-                {{ filter.form.category }}
-            </div>
-            <div class="form-group">
-                <label for="price-slider">Price Range</label>
-                <div id="price-slider"></div>
-                <input type="hidden" name="price_min" id="price_min">
-                <input type="hidden" name="price_max" id="price_max">
-            </div>
+<!-- Button to toggle the sidebar -->
+<button id="toggle-sidebar" class="btn btn-primary">Filters</button>
 
-            <div class="form-group">
-                {{ filter.form.brand.label_tag }}
-                {{ filter.form.brand }}
-            </div>
-<!--            <div class="form-group">-->
-<!--                {{ filter.form.rating.label_tag }}-->
-<!--                {{ filter.form.rating }}-->
-<!--            </div>-->
-            <button type="submit" class="btn btn-primary" id="apply-filters">Apply Filters</button>
-        </form>
-    </div>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        {% include 'includes/filter_sidebar.html' %}
 
-    <div class="col-md-9 product-list">
-        <div class="row">
-            {% for product in products %}
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        {% if product.image %}
-                            <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.name }}">
-                        {% else %}
-                            <img class="card-img-top" src="https://via.placeholder.com/150" alt="{{ product.name }}">
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="{% url 'shop:product_detail' product.id product.slug %}">{{ product.name }}</a></h5>
-                            <p class="card-text">{{ product.price }}</p>
+        <!-- Main Content -->
+        <div class="col-md-9 main-content">
+            <div class="product-list">
+                <div class="row">
+                    {% for product in products %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm">
+                                {% if product.image %}
+                                    <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.name }}">
+                                {% else %}
+                                    <img class="card-img-top" src="https://via.placeholder.com/150" alt="{{ product.name }}">
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title"><a href="{% url 'shop:product_detail' product.id product.slug %}">{{ product.name }}</a></h5>
+                                    <p class="card-text">{{ product.price }}</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
-        </div>
-        <div>
-            {% if is_paginated %}
-                {% bootstrap_pagination page_obj %}
-            {% endif %}
+                <div class="mt-4">
+                    {% if is_paginated %}
+                        {% bootstrap_pagination page_obj %}
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-
 {% endblock %}
-
